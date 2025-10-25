@@ -1,23 +1,31 @@
 {
-  "$schema": "https://www.canva.dev/schemas/app/v1/manifest-schema.json",
-  "manifest_schema_version": 1,
-  "runtime": {
-    "permissions": [
-      { "name": "canva:design:content:read", "type": "mandatory" },
-      { "name": "canva:design:content:write", "type": "mandatory" },
-      { "name": "canva:asset:private:read", "type": "mandatory" },
-      { "name": "canva:asset:private:write", "type": "mandatory" },
-      { "name": "canva:brandkit:read", "type": "mandatory" }
+  "name": "ShopinistaMeta Canva AI Studio",
+  "version": "1.0.0",
+  "description": "App inteligente para crear, importar y diseñar contenido con IA dentro de Canva.",
+  "author": "Marco Flores",
+  "entryPoint": "https://maff0986.github.io/app-shopinistameta-canva/main.js",
+  "appType": "sidePanel",
+  "permissions": [
+    "activeDesign",
+    "editDesign",
+    "readDesign",
+    "fetch",
+    "showNotification",
+    "openExternalUrl"
+  ],
+  "capabilities": {
+    "supportsImport": true,
+    "supportsExport": true
+  },
+  "categories": ["AI", "Productivity", "Content Creation"],
+  "defaultLocale": "es",
+  "ui": {
+    "panels": [
+      {
+        "type": "sidePanel",
+        "label": "ShopinistaMeta Studio",
+        "icon": "https://cdn-icons-png.flaticon.com/512/1162/1162499.png"
+      }
     ]
-  },
-  "intent": {
-    "design_editor": { "enrolled": true },
-    "data_connector": { "enrolled": true }
-  },
-  "app": {
-    "name": "ShopinistaMeta Canva App",
-    "version": "1.0.0",
-    "description": "Genera contenido, importa imágenes y crea catálogos desde feeds y URLs.",
-    "homepage_url": "https://maff0986.github.io/app-shopinistameta-canva/"
   }
 }
