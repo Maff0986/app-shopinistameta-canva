@@ -1,4 +1,13 @@
 // Canva SDK (no requiere instalación)
+import { registerOnPluginInit, registerAction } from '@canva/app-ui-kit';
+
+registerOnPluginInit(() => {
+  registerAction('edit_design:render', async (data) => {
+    console.log("Rendering content into Canva design:", data);
+    // Aquí puedes agregar la lógica para insertar imágenes o texto en el diseño
+  });
+});
+
 const canva = window.canva;
 
 document.getElementById('generateBtn').addEventListener('click', async () => {
