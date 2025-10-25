@@ -1,0 +1,20 @@
+{
+  "en-US": {
+    "app.title": {
+      "defaultMessage": "ShopinistaMeta Canva App",
+      "description": "Main title displayed in the app"
+    },
+    "button.loadTemplate": {
+      "defaultMessage": "Load Template",
+      "description": "Button label to load a template"
+    },
+    "button.importFeed": {
+      "defaultMessage": "Generate from Feed",
+      "description": "Button label to process a CSV or JSON feed"
+    },
+    "msg.noFile": {
+      "defaultMessage": "Please choose a CSV or JSON file.",
+      "description": "Shown when no feed file was selected"
+    }
+  }
+}

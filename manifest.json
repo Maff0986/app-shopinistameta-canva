@@ -1,0 +1,22 @@
+{
+  "name": "ShopinistaMeta Canva App",
+  "version": "1.0.0",
+  "description": "Conecta y carga activos desde feeds externos directamente en Canva.",
+  "appKind": "web_app",
+  "activities": {
+    "edit_design": {
+      "render": {
+        "url": "https://maff0986.github.io/app-shopinistameta-canva/main.js"
+      }
+    }
+  },
+  "permissions": {
+    "scopes": [
+      "canva:design:content:read",
+      "canva:design:content:write",
+      "canva:asset:private:read",
+      "canva:asset:private:write",
+      "canva:brandkit:read"
+    ]
+  }
+}
