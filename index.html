@@ -5,33 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ShopinistaMeta Canva App</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://sdk.canva.com/designapps/v1/sdk.js"></script>
 </head>
 <body>
-  <div class="app-container">
-    <h1>🧠 ShopinistaMeta Canva App</h1>
-    <p>Genera contenido, importa imágenes y crea catálogos desde URLs o CSV.</p>
+  <div class="container">
+    <header>
+      <img src="https://cdn.shopinistameta.com/logo/shopinista-meta-white.png" alt="ShopinistaMeta Logo" class="logo" />
+      <h1>ShopinistaMeta Canva App</h1>
+      <p>Genera contenido, importa imágenes y diseña más rápido 🚀</p>
+    </header>
 
-    <section class="panel">
-      <h2>🧠 Generar contenido</h2>
-      <textarea id="prompt" placeholder="Escribe una frase o descripción..."></textarea>
-      <button id="generateBtn">Agregar al diseño</button>
+    <section class="card">
+      <h2>🧠 Generar contenido con IA</h2>
+      <input type="text" id="prompt" placeholder="Escribe una frase o descripción..." />
+      <button id="ai-btn" class="btn">Generar con IA</button>
     </section>
 
-    <section class="panel">
+    <section class="card">
       <h2>🖼️ Importar imagen desde URL</h2>
-      <input type="text" id="imageUrl" placeholder="Pega la URL de la imagen" />
-      <button id="importBtn">Importar imagen</button>
+      <input type="text" id="image-url" placeholder="Pega aquí la URL de una imagen" />
+      <button id="import-image-btn" class="btn">Importar imagen</button>
     </section>
 
-    <section class="panel">
-      <h2>📂 Cargar datos externos (CSV)</h2>
-      <input type="file" id="fileInput" accept=".csv" />
-      <button id="loadCsvBtn">Cargar Catálogo</button>
+    <section class="card">
+      <h2>📦 Renderizar contenido</h2>
+      <button id="generate-btn" class="btn btn-alt">Agregar al diseño</button>
     </section>
 
-    <footer>v1.0.0 | Shopinista</footer>
+    <footer>
+      <p>v1.0.1 | ShopinistaMeta · Desarrollado por <strong>Marco</strong></p>
+    </footer>
   </div>
 
   <script src="main.js"></script>
 </body>
 </html>
+
