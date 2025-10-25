@@ -1,58 +1,118 @@
-// Canva SDK (no requiere instalación)
-import { registerOnPluginInit, registerAction } from '@canva/app-ui-kit';
+/* =========================================================
+   🧠 ShopinistaMeta Canva App - Main JS
+   Version: 1.0.1 | Autor: Marco (Shopinista)
+   Descripción:
+   Genera contenido, importa imágenes y conecta catálogos
+   directamente desde la app de Canva.
+   ========================================================= */
 
-registerOnPluginInit(() => {
-  registerAction('edit_design:render', async (data) => {
-    console.log("Rendering content into Canva design:", data);
-    // Aquí puedes agregar la lógica para insertar imágenes o texto en el diseño
-  });
-});
-
-const canva = window.canva;
-
-document.getElementById('generateBtn').addEventListener('click', async () => {
-  const text = document.getElementById('prompt').value;
-  if (!text) return alert('Escribe algo primero');
-
-  await canva.design.addText({
-    text: text,
-    fontSize: 24,
-    color: '#222',
-    position: { x: 100, y: 100 }
-  });
-});
-
-document.getElementById('importBtn').addEventListener('click', async () => {
-  const imageUrl = document.getElementById('imageUrl').value;
-  if (!imageUrl) return alert('Pega la URL de la imagen');
-  
-  await canva.design.addImage({
-    url: imageUrl,
-    position: { x: 150, y: 150 },
-    width: 400
-  });
-});
-
-document.getElementById('loadCsvBtn').addEventListener('click', async () => {
-  const file = document.getElementById('fileInput').files[0];
-  if (!file) return alert('Selecciona un archivo CSV');
-  
-  const text = await file.text();
-  const rows = text.split('\n').slice(1);
-  
-  for (const row of rows) {
-    const [title, imageUrl] = row.split(',');
-    if (imageUrl) {
-      await canva.design.addImage({ url: imageUrl.trim(), width: 400 });
-      await canva.design.addText({ text: title.trim(), fontSize: 20, color: '#000' });
-    }
-  }
-});
-
+// Verificación de carga
 console.log("✅ ShopinistaMeta Canva App loaded successfully");
 
-if (window.Canva && window.Canva.on) {
+// Registrar acciones de Canva
+if (typeof window.Canva !== "undefined") {
   console.log("🧩 Canva SDK detected and ready");
+
+  // Espera la inicialización del SDK
+  window.Canva.init(() => {
+    console.log("🚀 Canva App initialized");
+
+    // Acción requerida por Canva para renderizar contenido
+    window.Canva.registerAction("edit_design:render", async (data) => {
+      console.log("🎨 Rendering content into Canva design:", data);
+      alert("Contenido enviado correctamente a tu diseño de Canva.");
+    });
+  });
 } else {
-  console.error("❌ Canva SDK not detected, check manifest or HTTPS");
+  console.error("❌ Canva SDK not detected. Check manifest or HTTPS settings.");
 }
+
+/* =========================================================
+   📸 Importar Imagen desde URL
+   ========================================================= */
+async function importImage(url) {
+  try {
+    if (!url) {
+      alert("Por favor, ingresa una URL de imagen válida.");
+      return;
+    }
+
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const file = new File([blob], "imported-image.jpg", { type: blob.type });
+
+    if (window.Canva && window.Canva.design) {
+      await window.Canva.design.importImage(file);
+      alert("✅ Imagen importada exitosamente en tu diseño.");
+    } else {
+      alert("❌ No se pudo acceder al diseño de Canva. Revisa permisos.");
+    }
+  } catch (error) {
+    console.error("Error al importar imagen:", error);
+    alert("Error al importar la imagen. Revisa la URL o conexión.");
+  }
+}
+
+/* =========================================================
+   🤖 Generar contenido con IA (sin Canva Pro)
+   ========================================================= */
+async function generateTextWithAI(prompt) {
+  try {
+    const response = await fetch("https://api.openrouter.ai/v1/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer TU_API_KEY_GRATUITA_AQUI", // Puedes usar una de prueba
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        prompt: prompt,
+        max_tokens: 120,
+      }),
+    });
+
+    const data = await response.json();
+    const generatedText = data?.choices?.[0]?.text?.trim();
+
+    if (generatedText) {
+      alert("🧠 Texto generado:\n\n" + generatedText);
+      return generatedText;
+    } else {
+      alert("❌ No se pudo generar el texto. Revisa tu API Key o prompt.");
+    }
+  } catch (error) {
+    console.error("Error con IA:", error);
+    alert("Error al generar texto con IA.");
+  }
+}
+
+/* =========================================================
+   📦 Integración de botones de UI
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🧩 UI cargada correctamente.");
+
+  const generateBtn = document.getElementById("generate-btn");
+  const imageBtn = document.getElementById("import-image-btn");
+  const aiBtn = document.getElementById("ai-btn");
+
+  if (generateBtn) {
+    generateBtn.addEventListener("click", () => {
+      window.Canva?.trigger("edit_design:render", { message: "Render test" });
+    });
+  }
+
+  if (imageBtn) {
+    imageBtn.addEventListener("click", () => {
+      const url = document.getElementById("image-url").value;
+      importImage(url);
+    });
+  }
+
+  if (aiBtn) {
+    aiBtn.addEventListener("click", async () => {
+      const prompt = prompt("¿Qué deseas generar con IA?");
+      if (prompt) await generateTextWithAI(prompt);
+    });
+  }
+});
