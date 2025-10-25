@@ -1,16 +1,15 @@
 {
   "name": "ShopinistaMeta Canva App",
   "version": "1.0.1",
-  "description": "Genera contenido, importa imágenes y conecta catálogos directamente desde Canva.",
+  "description": "Genera contenido, importa imágenes y diseña más rápido.",
   "homepage_url": "https://maff0986.github.io/app-shopinistameta-canva/",
-  "app_type": "data",
-  "permissions": {
-    "can_edit_design": true,
-    "can_import_media": true
-  },
   "entrypoint": {
     "type": "web",
     "url": "https://maff0986.github.io/app-shopinistameta-canva/index.html"
   },
-  "actions": ["edit_design:render"]
+  "actions": ["edit_design:render"],
+  "permissions": {
+    "can_edit_design": true,
+    "can_import_media": true
+  }
 }
