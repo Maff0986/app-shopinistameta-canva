@@ -1,25 +1,37 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ShopinistaMeta Canva App</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <script src="./main.js" defer></script>
-  <style>
-    body{font-family:Inter,Arial,sans-serif;background:#f5f5f5;padding:24px;}
-    h1{font-size:20px;margin:0 0 8px;}
-    p{color:#444;margin:0 0 16px;}
-    button{background:#0077ff;color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>ShopinistaMeta Canva App</h1>
-  <p>Import feed items or load a template to generate designs in Canva.</p>
-  <button id="renderBtn">Open Connector Panel</button>
-  <script>
-    document.getElementById('renderBtn').addEventListener('click', function(){
-      alert('Open the app from the Canva editor sidebar to use the connector.');
-    });
-  </script>
+  <div class="app-container">
+    <h1>🧠 ShopinistaMeta Canva App</h1>
+    <p>Genera contenido, importa imágenes y crea catálogos desde URLs o CSV.</p>
+
+    <section class="panel">
+      <h2>🧠 Generar contenido</h2>
+      <textarea id="prompt" placeholder="Escribe una frase o descripción..."></textarea>
+      <button id="generateBtn">Agregar al diseño</button>
+    </section>
+
+    <section class="panel">
+      <h2>🖼️ Importar imagen desde URL</h2>
+      <input type="text" id="imageUrl" placeholder="Pega la URL de la imagen" />
+      <button id="importBtn">Importar imagen</button>
+    </section>
+
+    <section class="panel">
+      <h2>📂 Cargar datos externos (CSV)</h2>
+      <input type="file" id="fileInput" accept=".csv" />
+      <button id="loadCsvBtn">Cargar Catálogo</button>
+    </section>
+
+    <footer>v1.0.0 | Shopinista</footer>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
