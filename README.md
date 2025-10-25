@@ -8,4 +8,4 @@ Aplicación gratuita para crear contenido, importar imágenes y renderizar texto
 - Agregar texto automáticamente al diseño
 - Totalmente sin costo ni dependencias
 
-### URL de carga (Development URL)
+### URL de carga https://maff0986.github.io/app-shopinistameta-canva/main.js
