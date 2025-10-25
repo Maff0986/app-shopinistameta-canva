@@ -1,118 +1,69 @@
-/* =========================================================
-   🧠 ShopinistaMeta Canva App - Main JS
-   Version: 1.0.1 | Autor: Marco (Shopinista)
-   Descripción:
-   Genera contenido, importa imágenes y conecta catálogos
-   directamente desde la app de Canva.
-   ========================================================= */
+// =============================
+// 🎨 ShopinistaMeta Canva App
+// =============================
 
-// Verificación de carga
-console.log("✅ ShopinistaMeta Canva App loaded successfully");
+(async () => {
+  // Inicializar Canva SDK
+  const app = await window.canva.init();
+  console.log("✅ Canva SDK conectado correctamente.");
 
-// Registrar acciones de Canva
-if (typeof window.Canva !== "undefined") {
-  console.log("🧩 Canva SDK detected and ready");
-
-  // Espera la inicialización del SDK
-  window.Canva.init(() => {
-    console.log("🚀 Canva App initialized");
-
-    // Acción requerida por Canva para renderizar contenido
-    window.Canva.registerAction("edit_design:render", async (data) => {
-      console.log("🎨 Rendering content into Canva design:", data);
-      alert("Contenido enviado correctamente a tu diseño de Canva.");
-    });
+  // Registrar acción requerida para Canva
+  app.registerAction("edit_design:render", {
+    async execute() {
+      console.log("Render action ejecutada correctamente");
+    },
   });
-} else {
-  console.error("❌ Canva SDK not detected. Check manifest or HTTPS settings.");
-}
 
-/* =========================================================
-   📸 Importar Imagen desde URL
-   ========================================================= */
-async function importImage(url) {
-  try {
-    if (!url) {
-      alert("Por favor, ingresa una URL de imagen válida.");
-      return;
+  // =============================
+  // 🧠 Generar contenido con IA
+  // =============================
+  document.getElementById("ai-btn").addEventListener("click", async () => {
+    const prompt = document.getElementById("prompt").value.trim();
+    if (!prompt) return alert("Por favor escribe una descripción primero.");
+
+    try {
+      const response = await fetch("https://api.monkebrain.ai/text/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      });
+
+      const data = await response.json();
+      const text = data.output || "No se generó contenido.";
+      await app.editor.addText(text);
+
+      alert("✅ Contenido generado y agregado al diseño.");
+    } catch (err) {
+      console.error("Error al generar contenido:", err);
+      alert("❌ No se pudo generar el contenido.");
     }
+  });
 
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const file = new File([blob], "imported-image.jpg", { type: blob.type });
+  // =============================
+  // 🖼️ Importar imagen desde URL
+  // =============================
+  document.getElementById("import-image-btn").addEventListener("click", async () => {
+    const imageUrl = document.getElementById("image-url").value.trim();
+    if (!imageUrl) return alert("Pega la URL de una imagen.");
 
-    if (window.Canva && window.Canva.design) {
-      await window.Canva.design.importImage(file);
-      alert("✅ Imagen importada exitosamente en tu diseño.");
-    } else {
-      alert("❌ No se pudo acceder al diseño de Canva. Revisa permisos.");
+    try {
+      await app.editor.addImage(imageUrl);
+      alert("✅ Imagen importada correctamente.");
+    } catch (err) {
+      console.error("Error al importar imagen:", err);
+      alert("❌ Error al importar la imagen.");
     }
-  } catch (error) {
-    console.error("Error al importar imagen:", error);
-    alert("Error al importar la imagen. Revisa la URL o conexión.");
-  }
-}
+  });
 
-/* =========================================================
-   🤖 Generar contenido con IA (sin Canva Pro)
-   ========================================================= */
-async function generateTextWithAI(prompt) {
-  try {
-    const response = await fetch("https://api.openrouter.ai/v1/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer TU_API_KEY_GRATUITA_AQUI", // Puedes usar una de prueba
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        prompt: prompt,
-        max_tokens: 120,
-      }),
-    });
-
-    const data = await response.json();
-    const generatedText = data?.choices?.[0]?.text?.trim();
-
-    if (generatedText) {
-      alert("🧠 Texto generado:\n\n" + generatedText);
-      return generatedText;
-    } else {
-      alert("❌ No se pudo generar el texto. Revisa tu API Key o prompt.");
+  // =============================
+  // 📦 Agregar al diseño (render)
+  // =============================
+  document.getElementById("generate-btn").addEventListener("click", async () => {
+    try {
+      await app.editor.addText("✨ Render agregado con éxito desde ShopinistaMeta!");
+      console.log("✅ Render agregado.");
+    } catch (err) {
+      console.error("Error al renderizar:", err);
     }
-  } catch (error) {
-    console.error("Error con IA:", error);
-    alert("Error al generar texto con IA.");
-  }
-}
-
-/* =========================================================
-   📦 Integración de botones de UI
-   ========================================================= */
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("🧩 UI cargada correctamente.");
-
-  const generateBtn = document.getElementById("generate-btn");
-  const imageBtn = document.getElementById("import-image-btn");
-  const aiBtn = document.getElementById("ai-btn");
-
-  if (generateBtn) {
-    generateBtn.addEventListener("click", () => {
-      window.Canva?.trigger("edit_design:render", { message: "Render test" });
-    });
-  }
-
-  if (imageBtn) {
-    imageBtn.addEventListener("click", () => {
-      const url = document.getElementById("image-url").value;
-      importImage(url);
-    });
-  }
-
-  if (aiBtn) {
-    aiBtn.addEventListener("click", async () => {
-      const prompt = prompt("¿Qué deseas generar con IA?");
-      if (prompt) await generateTextWithAI(prompt);
-    });
-  }
-});
+  });
+})();
