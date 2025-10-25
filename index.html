@@ -1,43 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ShopinistaMeta Canva App</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://sdk.canva.com/designapps/v1/sdk.js"></script>
+  <!-- No es obligatorio pero puede ayudar en previews locales -->
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="https://cdn.shopinistameta.com/logo/shopinista-meta-white.png" alt="ShopinistaMeta Logo" class="logo" />
-      <h1>ShopinistaMeta Canva App</h1>
-      <p>Genera contenido, importa imágenes y diseña más rápido 🚀</p>
+      <div class="logo">🛋️ ShopinistaMeta</div>
+      <h1>Genera contenido, importa imágenes y diseña más rápido 🚀</h1>
+      <p class="sub">Crea catálogos masivos desde CSV/URLs y añade activos al diseño.</p>
     </header>
 
-    <section class="card">
+    <div class="card">
       <h2>🧠 Generar contenido con IA</h2>
-      <input type="text" id="prompt" placeholder="Escribe una frase o descripción..." />
+      <input id="prompt" placeholder="Escribe una frase o descripción..." />
       <button id="ai-btn" class="btn">Generar con IA</button>
-    </section>
+    </div>
 
-    <section class="card">
+    <div class="card">
       <h2>🖼️ Importar imagen desde URL</h2>
-      <input type="text" id="image-url" placeholder="Pega aquí la URL de una imagen" />
+      <input id="image-url" placeholder="Pega aquí la URL de una imagen" />
       <button id="import-image-btn" class="btn">Importar imagen</button>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>📦 Renderizar contenido</h2>
+    <div class="card">
+      <h2>📦 Renderizar contenido (prueba)</h2>
       <button id="generate-btn" class="btn btn-alt">Agregar al diseño</button>
-    </section>
+    </div>
 
-    <footer>
-      <p>v1.0.1 | ShopinistaMeta · Desarrollado por Marco</p>
-    </footer>
+    <footer>v1.0.0 | ShopinistaMeta</footer>
   </div>
+
   <script src="main.js"></script>
 </body>
 </html>
-
-
