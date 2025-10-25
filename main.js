@@ -48,3 +48,11 @@ document.getElementById('loadCsvBtn').addEventListener('click', async () => {
     }
   }
 });
+
+console.log("✅ ShopinistaMeta Canva App loaded successfully");
+
+if (window.Canva && window.Canva.on) {
+  console.log("🧩 Canva SDK detected and ready");
+} else {
+  console.error("❌ Canva SDK not detected, check manifest or HTTPS");
+}
